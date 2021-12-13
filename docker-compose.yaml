@@ -1,0 +1,24 @@
+version: "3.9"
+services:
+  ncarglow_service:
+    # name the image and container
+    image: ncarglow_base_image
+    container_name: ncarglow
+    # build off of local dockerfile
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    # mount this windows side directory in the container & set as working directory
+    volumes:
+      - ./:/root/ncar-glow
+      - build:/root/ncar-glow/build
+    #  - /dev/bus/usb:/dev/bus/usb
+    working_dir: /root/ncar-glow
+    environment:
+      # For Windows users, uncomment and set ip to yours for x11 graphics forwarding.
+      # Also make sure Mobaxterm is open so the server can receive graphics forwarding requests
+      - DISPLAY=127.0.0.1:0
+    # network_mode: "host"
+    # privileged: true
+volumes:
+  build:
